@@ -32,6 +32,8 @@ table {
   margin: 0 auto;
   justify-content: center;
   align-items: center;
+  padding: 15px;
+  border-radius: 18px;
 }
 .NuevaCategoria i {
   font-size: 20px;
@@ -61,4 +63,8 @@ table {
 
 .btn-plus i {
   margin: 0 5px;
+}
+
+button[type="submit"] {
+  margin-top: 18px;
 }

@@ -1,4 +1,4 @@
-<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <button class="navbar-toggler" type="button">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -28,7 +28,7 @@
       <button class="btn btn-dark my-2 my-sm-0" type="submit">Search</button>
     </form>
   </div>
-</nav> -->
+</nav>
 
 <article class="container">
   <h1>Listado de Categorias</h1>
@@ -46,7 +46,7 @@
     <tbody>
       <!-- Utiliza ngFor para iterar sobre las categorías en 'categories' -->
       <tr *ngFor="let category of categories">
-        <td>{{ category.category_id }}</td>
+        <td>{{ category.category_id + 1 }}</td>
         <td>{{ category.code }}</td>
         <td>{{ category.category }}</td>
         <td
@@ -63,7 +63,7 @@
         </td>
         <td class="dots-icon">
           <button
-            (click)="openModalOnClick2(category)"
+            (click)="openModal2(category)"
             class="btn dots-btn"
             type="button"
           >
@@ -74,55 +74,16 @@
     </tbody>
   </table>
 
-  <div class="modal fade" id="myModal2" tabindex="-1" role="dialog">
-    <div
-      class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down"
-      role="document"
-    >
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Opciones</h5>
-          <button
-            type="button"
-            class="close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <h5>{{ categoriaActual?.category }}</h5>
-          <form [formGroup]="categoryForm">
-            <button class="btn btn-plus btn-primary">
-              <i class="ph ph-note-pencil"></i><span>Editar</span>
-            </button>
-            <button class="btn btn-plus btn-primary" (click)="activarActual()">
-              <i class="ph ph-check-circle"></i><span>Activar</span>
-            </button>
-            <button
-              class="btn btn-plus btn-primary"
-              (click)="desactivarActual()"
-            >
-              <i class="ph ph-x-circle"></i><span>Desactivar</span>
-            </button>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-            (click)="closeModal()"
-          >
-            Close
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+  <button
+    (click)="openModal()"
+    class="btn btn-primary NuevaCategoria"
+    type="button"
+  >
+    Nueva categoria
+    <i class="ph ph-plus-circle"></i>
+  </button>
+  <!-- Modal para agregar un nuevo elemento -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -192,11 +153,131 @@
           >
             Close
           </button>
-          <button type="button" class="btn btn-primary" (click)="closeModal()">
-            Save changes
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal para el boton 'mas' del elemento -->
+  <div class="modal fade" id="myModal2" tabindex="-1" role="dialog">
+    <div
+      class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down"
+      role="document"
+    >
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Opciones</h5>
+          <button
+            type="button"
+            class="close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h5>{{ categoriaActual?.category }}</h5>
+          <form [formGroup]="categoryForm">
+            <button class="btn btn-plus btn-primary" (click)="editarActual()">
+              <i class="ph ph-note-pencil"></i><span>Editar</span>
+            </button>
+            <button class="btn btn-plus btn-primary" (click)="activarActual()">
+              <i class="ph ph-check-circle"></i><span>Activar</span>
+            </button>
+            <button
+              class="btn btn-plus btn-primary"
+              (click)="desactivarActual()"
+            >
+              <i class="ph ph-x-circle"></i><span>Desactivar</span>
+            </button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            (click)="closeModal()"
+          >
+            Close
           </button>
         </div>
       </div>
     </div>
-  </div> -->
+  </div>
+  <!-- Modal para el boton 'editar' el elemento  -->
+  <div class="modal fade" id="myModal3" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+          <button
+            type="button"
+            class="close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="categoryForm" (ngSubmit)="onSubmitEdit()">
+            <div class="form-group">
+              <label for="category">Nombre de la categoría</label>
+              <input
+                type="text"
+                class="form-control"
+                id="category"
+                formControlName="category"
+                required
+              />
+              <div
+                *ngIf="
+                  categoryForm.controls['category'].invalid &&
+                  (categoryForm.controls['category'].dirty ||
+                    categoryForm.controls['category'].touched)
+                "
+                class="text-danger"
+              >
+                El nombre de la categoría es obligatorio.
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="code">Código</label>
+              <input
+                type="text"
+                class="form-control"
+                id="code"
+                formControlName="code"
+                required
+              />
+              <div
+                *ngIf="
+                  categoryForm.controls['code'].invalid &&
+                  (categoryForm.controls['code'].dirty ||
+                    categoryForm.controls['code'].touched)
+                "
+                class="text-danger"
+              >
+                El código es obligatorio.
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            (click)="closeModal()"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </article>
