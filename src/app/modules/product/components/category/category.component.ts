@@ -1,8 +1,6 @@
 import { Component, OnInit,ElementRef, AfterViewInit } from '@angular/core';
 import { Category } from '../../_models/category';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ChangeDetectorRef } from '@angular/core';
-
 
 declare var $: any; 
 @Component({
@@ -23,9 +21,10 @@ export class CategoryComponent implements OnInit {
     category: ['', Validators.required],
     code: ['', Validators.required]
   });
+  constructor(private formBuilder: FormBuilder) {}
+  
   
   //Constructor del form
-  constructor(private formBuilder: FormBuilder, crd:ChangeDetectorRef) {}
 
   //Corre al iniciar , (da la tabla)
   ngOnInit(): void {
@@ -35,9 +34,10 @@ export class CategoryComponent implements OnInit {
 
   // Crea objetos Category
   getCategories() {
-    this.categories.push(new Category(1, '7685', 'Categoria 1', '0'));
-    this.categories.push(new Category(2, '7639', 'Category 2', '0'));
-    this.categories.push(new Category(3, '7683', 'Category 3', '1'));
+    this.categories.push(new Category(0, '7685', 'Categoria 1', '0'));
+    this.categories.push(new Category(1, '7639', 'Category 2', '0'));
+    this.categories.push(new Category(2, '7683', 'Category 3', '1'));
+     
   }
 
   // La funcion que abre el modal
@@ -75,16 +75,14 @@ export class CategoryComponent implements OnInit {
   }
   desactivarActual(){
     if(this.categoriaActual){
-    this.categories[this.categoriaActual?.category_id].status = '0';  
-
+    this.categories[this.categoriaActual.category_id].status = '0';  
   }
-  this.crd.detectChanges()
+}
+  // this.crd.detectChanges()
   activarActual(){
     if(this.categoriaActual){
-      this.categories[this.categoriaActual?.category_id].status = '1';    this.getCategories();
+      this.categories[this.categoriaActual.category_id].status= "1";        
     }
   }
 }
-
- 
 

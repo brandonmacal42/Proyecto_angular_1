@@ -94,13 +94,10 @@
         <div class="modal-body">
           <h5>{{ categoriaActual?.category }}</h5>
           <form [formGroup]="categoryForm">
-            <button
-              class="btn btn-plus btn-primary"
-              (click)="desactivarActual()"
-            >
+            <button class="btn btn-plus btn-primary">
               <i class="ph ph-note-pencil"></i><span>Editar</span>
             </button>
-            <button class="btn btn-plus btn-primary">
+            <button class="btn btn-plus btn-primary" (click)="activarActual()">
               <i class="ph ph-check-circle"></i><span>Activar</span>
             </button>
             <button
