@@ -1,33 +1,131 @@
-<nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark"></nav>
-<article class="container">
-  <h1>Listado de Categorias</h1>
-  <section>
-    <table class="table">
-      <thead class="table-primary">
-        <tr>
-          <th class="bg-secondary">Categoría ID</th>
-          <th class="">Código</th>
-          <th class="">Categoría</th>
-          <th class="">Estado</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Utiliza ngFor para iterar sobre las categorías en 'categories' -->
-        <tr *ngFor="let category of categories">
-          <td>{{ category.category_id }}</td>
-          <td>{{ category.code }}</td>
-          <td>{{ category.category }}</td>
-          <td>{{ category.status }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
-
-  <button (click)="openModalOnClick()" class="btn btn-primary" type="button">
-    Abrir Modal
+<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <button class="navbar-toggler" type="button">
+    <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#"
+          >Home <span class="sr-only">(current)</span></a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0" id="form-inline">
+      <input
+        class="form-control mr-sm-2"
+        type="search"
+        placeholder="Search"
+        aria-label="Search"
+      />
+      <button class="btn btn-dark my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav> -->
+
+<article class="container">
+  <h1>Listado de Categorias</h1>
+
+  <table class="table">
+    <thead class="table-primary">
+      <tr>
+        <th class="bg-secondary-subtle">Categoría ID</th>
+        <th class="">Código</th>
+        <th class="">Categoría</th>
+        <th class="">Estatus</th>
+        <th class="">Mas</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Utiliza ngFor para iterar sobre las categorías en 'categories' -->
+      <tr *ngFor="let category of categories">
+        <td>{{ category.category_id }}</td>
+        <td>{{ category.code }}</td>
+        <td>{{ category.category }}</td>
+        <td
+          [ngClass]="{ 'bg-danger text-white': +category.status <= 0 }"
+          *ngIf="+category.status <= 0"
+        >
+          {{ category.status }}
+        </td>
+        <td
+          [ngClass]="{ 'bg-primary text-white': +category.status > 0 }"
+          *ngIf="+category.status > 0"
+        >
+          {{ category.status }}
+        </td>
+        <td class="dots-icon">
+          <button
+            (click)="openModalOnClick2(category)"
+            class="btn dots-btn"
+            type="button"
+          >
+            <i class="ph ph-dots-three"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="modal fade" id="myModal2" tabindex="-1" role="dialog">
+    <div
+      class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down"
+      role="document"
+    >
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Opciones</h5>
+          <button
+            type="button"
+            class="close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h5>{{ categoriaActual?.category }}</h5>
+          <form [formGroup]="categoryForm">
+            <button
+              class="btn btn-plus btn-primary"
+              (click)="desactivarActual()"
+            >
+              <i class="ph ph-note-pencil"></i><span>Editar</span>
+            </button>
+            <button class="btn btn-plus btn-primary">
+              <i class="ph ph-check-circle"></i><span>Activar</span>
+            </button>
+            <button
+              class="btn btn-plus btn-primary"
+              (click)="desactivarActual()"
+            >
+              <i class="ph ph-x-circle"></i><span>Desactivar</span>
+            </button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            (click)="closeModal()"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -103,5 +201,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </article>
